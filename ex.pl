@@ -93,6 +93,14 @@ irmao(X, Y) :-
     descendenteDir(PAI, MAE, X), 
     descendenteDir(PAI, MAE, Y).
 
+irmao("tywin", "kevan").
+irmao("stannis", "renly").
+irmao("stannis", "robert").
+irmao("renly", "robert").
+irmao("sandor clegane", "ser gregor clegane").
+irmao("aerys ii", "rhaella").
+
+
 
 % matou(assassino, vitima)
 matou("tyrion", "joanna").
@@ -196,3 +204,23 @@ infiel(PESSOA) :-
     not(matou(_, PESSOA2)). 
 
 
+
+% 1.2. Questione, através da consola, esses mesmos factos de forma a responder positivamente ou negativamente às seguintes perguntas:
+%   Aeris está morto?
+%   matou(_, "aerys ii"). - true
+
+
+%   Sir Jaime matou Aerys?
+%   matou("ser jaime", "aerys ii"). - true
+
+
+%   Tywin é amigo de Tirion?
+%   amigo("tywin", "tirion"). - false
+
+
+%   O Stannis é irmão do Renly?
+%   irmao("stannis", "renly"). - true
+
+
+%   Existe alguma relação de incesto?
+%   irmao(X, Y), (casados(X, Y); casados(Y, X)); (relamorosa(X, Y); relamorosa(Y, X)). - true
