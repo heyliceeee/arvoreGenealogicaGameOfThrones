@@ -89,7 +89,9 @@ descendenteDir("rhaegar", "elia", "aegon").
 
 
 % irmao
-irmao(X, Y) :- descendenteDir(PAI, MAE, X), descendenteDir(PAI, MAE, Y).
+irmao(X, Y) :- 
+    descendenteDir(PAI, MAE, X), 
+    descendenteDir(PAI, MAE, Y).
 
 
 % matou(assassino, vitima)
@@ -109,55 +111,88 @@ inimigo("tywin", "tyrion").
 
 
 % amigo(nome, nome)
+amigo("renly", "loras tyrell").
 
 
 
 % relamorosa(nome, nome) - n ha relacao de casamento
-
+relamorosa("ser jaime", "cersei").
+relamorosa("renly", "loras tyrell").
 
 
 % filho(pai, filho)
+filho(PROGENITOR, FILHO) :- 
+    descendenteDir(PROGENITOR, _, FILHO), 
+    homem(FILHO).
 
 
 
-% filho(pai, filha)
+% filha(pai, filha)
+filha(PROGENITOR, FILHA) :- 
+    descendenteDir(PROGENITOR, _, FILHA), 
+    mulher(FILHA).
 
 
 
 % gay(nome)
+gay(PESSOA) :- 
+    (casados(PESSOA, CONJUGE); casados(CONJUGE, PESSOA); relamorosa(PESSOA, CONJUGE); relamorosa(CONJUGE, PESSOA)), 
+    ((mulher(PESSOA), mulher(CONJUGE)); (homem(PESSOA), homem(CONJUGE))).
 
 
 
 % viuvo(nome) - casado c uma pessoa morta
+viuvo(PESSOA) :- 
+    homem(PESSOA),
+    (casados(PESSOA, CONJUGE); casados(CONJUGE, PESSOA)),
+    matou(_, CONJUGE).
 
 
 
 % viuva(nome) - casada c uma pessoa morta
+viuva(PESSOA) :- 
+    mulher(PESSOA),
+    (casados(PESSOA, CONJUGE); casados(CONJUGE, PESSOA)),
+    matou(_, CONJUGE).
 
 
 
-% viuvos_amorosos(nome, nome) - viúvos, de sexos opostos, q mantém um relacionamento amoroso
+% viuvos_amorosos(HOMEM, MULHER) - viúvos, de sexos opostos, q mantém um relacionamento amoroso
+viuvos_amorosos(HOMEM, MULHER) :- 
+    viuvo(HOMEM), viuva(MULHER), 
+    (relamorosa(HOMEM, MULHER); relamorosa(MULHER, HOMEM)). 
 
 
 
 % vingança_pendente(nome, nome) – existe uma vingança pendente entre 2 personagens qd a segunda matou o conjugue da primeira
+vingança_pendente(PESSOA1, PESSOA2) :-
+    matou(PESSOA2, CONJUGEPESSOA1),
+    (casados(PESSOA1, CONJUGEPESSOA1); casados(CONJUGEPESSOA1, PESSOA1)).
 
 
 
 % assassino(nome) – determina se uma personagem é assassino
+assassino(PESSOA) :- matou(PESSOA, _).
 
 
 
 % morto(nome) – determina se uma personagem está morta
-
+morto(PESSOA) :- matou(_, PESSOA).
 
 
 
 % vingou(X, Y) :– X vingou Y se X matou uma pessoa q tinha previamente morto Y
+vingou(X, Y) :-
+    matou(X, PESSOA),
+    matou(PESSOA, Y).
 
 
 
-% infiel(nome) – uma personagem é infiel se está casada c uma pessoa (q n esteja morta) mas mantém uma relação amorosa c outra (q tbm n esteja morta)
-
+% infiel(nome) – uma personagem é infiel se está casada c uma pessoa (q n esteja morta) mas mantém uma relação amorosa c outra (que tbm n esteja morta)
+infiel(PESSOA) :- 
+    (casados(PESSOA, CONJUGE); casados(CONJUGE, PESSOA)),
+    not(matou(_, CONJUGE)),
+    (relamorosa(PESSOA, PESSOA2); relamorosa(PESSOA2, PESSOA)),
+    not(matou(_, PESSOA2)). 
 
 
