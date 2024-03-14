@@ -223,4 +223,23 @@ infiel(PESSOA) :-
 
 
 %   Existe alguma relação de incesto?
-%   irmao(X, Y), (casados(X, Y); casados(Y, X)); (relamorosa(X, Y); relamorosa(Y, X)). - true
+%   irmao(X, Y), (casados(X, Y); casados(Y, X)); (relamorosa(X, Y); relamorosa(Y, X)), familia(X, F), familia(Y, F).
+
+
+%   1.3. Escreva agora factos/regras que permitam determinar a seguinte informação, através da consola:
+%   Entre que personagens existem relações de incesto?
+%   incesto(X, Y)
+incesto(X, Y) :- 
+    irmao(X, Y), 
+	(casados(X, Y); casados(Y, X)); 
+    (relamorosa(X, Y); relamorosa(Y, X)).
+
+
+%   Que personagens foram mortas por Tyrion?
+%   matou("tyrion", Y).
+
+
+%   Que personagens da família Targaryen foram mortas por Ser Jaime?
+%   Que personagens mataram membros da família Targaryen?
+%   Assumindo que não sabe a verdade, que personagens são resultado do casamento entre Cersei e Robert?
+%   Determine todos os filhos de todos os relacionamentos de casamento.
