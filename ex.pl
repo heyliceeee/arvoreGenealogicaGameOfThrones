@@ -240,6 +240,16 @@ incesto(X, Y) :-
 
 
 %   Que personagens da família Targaryen foram mortas por Ser Jaime?
+% 	matou("ser jaime", Y), familia(Y, "targaryen").
+
+
 %   Que personagens mataram membros da família Targaryen?
+%	matou(X, Y), familia(Y, "targaryen").
+
+
 %   Assumindo que não sabe a verdade, que personagens são resultado do casamento entre Cersei e Robert?
+%	descendenteDir("robert", "cersei", FILHO)
+	
+
 %   Determine todos os filhos de todos os relacionamentos de casamento.
+%	casados(X, Y), descendenteDir(X, Y, FILHO).
